@@ -1,3 +1,4 @@
+USE_XSLT := true
 include lib/main.mk
 
 lib/main.mk:
