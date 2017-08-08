@@ -33,7 +33,11 @@ informative:
 
 --- abstract
 
-TODO: Geolocation Header abstract here
+The Geolocation header introduces a mechanism to send a device location over an HTTP Secure Context from a user agent to a server.
+
+The Geolocation-Request header is used by a server to inform the user agent when a Geolocation header is requested to be sent.
+
+This mechanism, through persistent Geolocation-Requests, provides a single-roundtrip solution to obtain location-aware responses for location-aware services, as oposed to existing JS-based Geolocation API that require two round trips.
 
 --- middle
 
@@ -88,30 +92,32 @@ These attributes match the data exposed through the Javascript Geolocation API {
 
 This header is used to send geolocation data from the user agent to the server.
 
-Position
---------
+Attributes
+----------
+- Position
+
 A position is an array of numbers and MUST always be provided.  There MUST be two or three elements.  The first two elements are longitude and latitude, in that order and using decimal numbers.  Altitude or elevation in meters above sea level MAY be included as an optional third element. This position format is based on RFC 7946 {{RFC7946}}
 
-Accuracy
---------
+- Accuracy
+
 Accuracy MUST always be provided and represents the level of accuracy of the latitude and longitude components of the Position. It is specified in meters. The value of the accuracy attribute must be a non-negative decimal number.
 
-Timestamp
----------
+- Timestamp
+
 Time when Position was computed. It is a positive value, representing milliseconds since the UNIX epoch of 1 January 1970 at 00:00 UTC.
 
 Optional attributes that MAY be included:
 
-AltitudeAccuracy
-----------------
+- AltitudeAccuracy
+
 It represents the accuracy level of the altitude, and it is specified in meters. When altitude is not provided as part of the Position, this attribute MUST not be included. Otherwise, the value of this attribute MUST be a non-negative decimal number.
 
-Speed
------
+- Speed
+
 Denotes the device's current speed, in meters per second. When provided, the value of the speed attribute MUST be a non-negative decimal number. If the device is not moving, the speed attribute MUST not be included.
 
-Heading
--------
+- Heading
+
 Represents the bearing, that is the direction of the device and is specified in degrees. The value MUST be a decimal number between 0 and 360, as the clockwise direction relative to the north. If the device is not moving, the heading attribute MUST not be included.
 
 
@@ -126,8 +132,11 @@ All attributes are separated by semicolon. Each attribute MUST be specified as A
 
 This header is used to send a geolocation request from the server to the user agent. A geolocation request will be scoped to a particular Path on the server, and this geolocation request state per-Path MAY be persisted and maintained by the user agent.
 
-Path
-----
+
+Attributes
+----------
+
+- Path
 
 The scope of a Geolocation request is limited to a particular path, controlled by the Path attribute, mimicking the Path attribute in Set-cookie RFC 6265 {{RFC6265}}. However, in the Geolocation-Request case, the Path attribute MUST always be provided.
 
@@ -135,8 +144,7 @@ The user agent will include the Geolocation Header in a request only if the Path
 
 Permission to access geolocation is granted or denied to an entire origin, rather than individual paths within an origin (see “Negotiation, Privacy and Security” section).
 
-Type
-----
+- Type
 
 There are two possible values for this attribute: "IfAlreadyGranted" or "MayPrompt".
 
@@ -146,8 +154,7 @@ There are two possible values for this attribute: "IfAlreadyGranted" or "MayProm
 
 Optional attribute that MAY be included:
 
-Expires
--------
+- Expires
 
 This mimics the Expires attribute in Set-cookie RFC 6265 {{RFC6265}}, and follows the same format and semantics. The Expires attribute indicates the maximum lifetime of the Geolocation Request, represented as the date and time at which the request expires.
 
